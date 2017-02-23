@@ -33,14 +33,11 @@ game.newLoopFromConstructor('myGame', function () {
   });
 
   objs = [];
+var name = 'ne robit';	
+
 var GetUserName = function(){
 		VK.api('users.get', {}, function(data){
-			brush.drawText({
-			    x : 100, y : 100,
-			    text : data.respone[0].first_name,
-			    color : 'black',
-			    size : 20	
-			});
+			name = data.response[0].first_name;
 		});
 	};
 	
@@ -49,6 +46,12 @@ var GetUserName = function(){
     game.clear(); // clear scree
     myCursor.draw(); // drawing
   GetUserName();
+	  brush.drawText({
+			    x : 100, y : 100,
+			    text : name,
+			    color : 'black',
+			    size : 20	
+			});
     OOP.drawArr(objs);
   };
 });
