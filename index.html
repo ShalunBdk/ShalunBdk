@@ -38,13 +38,6 @@ game.newLoopFromConstructor('myGame', function () {
     game.clear(); // clear screen
     myCursor.draw(); // drawing
     OOP.drawArr(objs);
-
-    if (mouse.isPress('LEFT')) {
-      objs.push(OOP.clone(myCursor, function () {
-        this.setAlpha(1);
-        this.ondraw = false;
-      }));
-    }
   };
 
 });
