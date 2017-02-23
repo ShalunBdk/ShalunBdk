@@ -45,13 +45,10 @@ var test = brush.drawText({
   this.update = function () {
     // Update function
     game.clear(); // clear screen
+    test.draw();
     myCursor.draw(); // drawing
     OOP.drawArr(objs);
   };
-   if (mouse.isPress('LEFT')) {
-      test.draw();
-    }
-});
 	 
 
 game.startLoop('myGame');
