@@ -31,6 +31,14 @@ game.newLoopFromConstructor('myGame', function () {
       this.moveTimeC(mouse.getPosition(), 5);
     }
   });
+var test = brush.drawText({
+      text : 'TEST',
+      color : 'white',
+      size : sizeText * 1.5,
+      x : width / 2,
+      y : sizeText / 2,
+      align : 'center'
+    });
 
   objs = [];
 
@@ -41,14 +49,7 @@ game.newLoopFromConstructor('myGame', function () {
     OOP.drawArr(objs);
   };
    if (mouse.isPress('LEFT')) {
-      brush.drawText({
-      text : 'TEST',
-      color : 'white',
-      size : sizeText * 1.5,
-      x : width / 2,
-      y : sizeText / 2,
-      align : 'center'
-    });
+      test.draw();
     }
 });
 	 
