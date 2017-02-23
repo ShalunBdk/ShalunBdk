@@ -39,10 +39,8 @@ game.newLoopFromConstructor('myGame', function () {
     myCursor.draw(); // drawing
     OOP.drawArr(objs);
   };
-
-});
-	  
-brush.drawText({
+   if (mouse.isPress('LEFT')) {
+      brush.drawText({
       text : 'TEST',
       color : 'white',
       size : sizeText * 1.5,
@@ -50,6 +48,9 @@ brush.drawText({
       y : sizeText / 2,
       align : 'center'
     });
+    }
+});
+	 
 
 game.startLoop('myGame');
 	
