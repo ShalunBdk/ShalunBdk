@@ -31,22 +31,19 @@ game.newLoopFromConstructor('myGame', function () {
       this.moveTimeC(mouse.getPosition(), 5);
     }
   });
-var test = brush.drawText({
-      text : 'TEST',
-      color : 'white',
-      size : 50,
-      x : 50,
-      y : 50,
-      align : 'center'
-    });
 
   objs = [];
 
   this.update = function () {
     // Update function
-    game.clear(); // clear screen
-    test.draw();
+    game.clear(); // clear scree
     myCursor.draw(); // drawing
+	  brush.drawText({
+    x : 100, y : 100,
+    text : 'Управление: СТРЕЛКИ',
+    color : 'black',
+    size : 20
+  });
     OOP.drawArr(objs);
   };
 });
