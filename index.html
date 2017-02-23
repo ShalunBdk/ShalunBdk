@@ -34,10 +34,22 @@ game.newLoopFromConstructor('myGame', function () {
 
   objs = [];
 
+var GetUserName = function(){
+		VK.api('users.get', 'user_ids': ''}, function(data){
+			brush.drawText({
+			    x : 100, y : 100,
+			    text : data.response[0].first_name,
+			    color : 'black',
+			    size : 20	
+			});
+		}
+	}
+	
   this.update = function () {
     // Update function
     game.clear(); // clear scree
     myCursor.draw(); // drawing
+  GetUserName();
     OOP.drawArr(objs);
   };
 });
@@ -45,7 +57,6 @@ game.newLoopFromConstructor('myGame', function () {
 
 game.startLoop('myGame');
 	
-
 
   VK.init(function() { 
     console.log('ALL GOOD');
