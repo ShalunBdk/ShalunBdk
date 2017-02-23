@@ -35,7 +35,7 @@ game.newLoopFromConstructor('myGame', function () {
   objs = [];
 var name;
 var GetUserName = function(){
-		VK.api('users.get', 'user_ids': ''}, function(data){
+		VK.api('users.get', {}, function(data){
 			name = data.respone[0].first_name
 		});
 	};
