@@ -41,10 +41,19 @@ game.newLoopFromConstructor('myGame', function () {
   };
 
 });
+	  
+brush.drawText({
+      text : 'TEST',
+      color : 'white',
+      size : sizeText * 1.5,
+      x : width / 2,
+      y : sizeText / 2,
+      align : 'center'
+    });
 
 game.startLoop('myGame');
 	
-	
+
 
   VK.init(function() { 
     console.log('ALL GOOD');
