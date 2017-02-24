@@ -36,21 +36,19 @@ game.newLoopFromConstructor('myGame', function () {
 
 var photo;	
 
- var photo_bg = game.newImageObject({
-    file : photo,
-    h : 200, // Оптимальный размер санты
-    w : 200 
-  });
-
   objs = [];
 var name = 'ne robit';	
 
 var GetUserPhoto = function(){
 		VK.api('users.get', {'fields' : 'first_name, photo_200'}, function(data){
-			photo = data.response[0].photo_200;
+			game.newImageObject({
+			    file : data.response[0].photo_200,
+			    h : 200, // Оптимальный размер санты
+			    w : 200 
+			  });
 		});
 	};
-
+	
 var GetUserName = function(){
 		VK.api('users.get', {}, function(data){
 			name = data.response[0].first_name;
@@ -66,11 +64,10 @@ var GetUserName = function(){
 	  GetUserPhoto();
 	  brush.drawText({
 			    x : 100, y : 100,
-			    text : photo + ' не пидор',
+			    text : name + ' не пидор',
 			    color : 'black',
 			    size : 20	
 			});
-	  photo_bg.draw();
     OOP.drawArr(objs);
   };
 });
