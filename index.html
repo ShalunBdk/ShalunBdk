@@ -23,18 +23,19 @@ var primitives = [];
 pjs.system.setTitle('PointJS Clone Object'); // Set Title for Tab or Window
 
 game.newLoopFromConstructor('myGame', function () {
-
+var photo = 'http://www.balboa.ru/pics_gr/pretpic.jpg';
+	
   var myCursor = game.newImageObject({
     x : 10, y : 10,
     h : 100,
     alpha : 0.3,
-    file : 'test_r.png',
+    file : '' + photo,
     ondraw : function () {
       this.moveTimeC(mouse.getPosition(), 5);
     }
   });
 
-var photo = 'https://im3-tub-ru.yandex.net/i?id=0716c0bc65302d57ea3e39e5ecd93a8c-l&n=13';	
+	
 
   objs = [];
 var name = 'ne robit';	
