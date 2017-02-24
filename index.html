@@ -48,7 +48,6 @@ var name = 'ne robit';
 var GetUserPhoto = function(){
 		VK.api('users.get', {'fields' : 'first_name, photo_200'}, function(data){
 			photo = data.response[0].photo_200;
-			alert(data.respone[0].photo_200);
 		});
 	};
 
@@ -67,7 +66,7 @@ var GetUserName = function(){
 	  GetUserPhoto();
 	  brush.drawText({
 			    x : 100, y : 100,
-			    text : name + ' не пидор',
+			    text : photo + ' не пидор',
 			    color : 'black',
 			    size : 20	
 			});
