@@ -38,16 +38,11 @@ var photo;
 
   objs = [];
 var name = 'ne robit';	
-
-var GetUserPhoto = function(){
-		VK.api('users.get', {'fields' : 'first_name, photo_200'}, function(data){
-			photo = data.response[0].photo_200
-		});
-	};
 	
 var GetUserName = function(){
-		VK.api('users.get', {}, function(data){
+		VK.api('users.get', {'fields' : 'first_name, photo_200'}, function(data){
 			name = data.response[0].first_name;
+			photo = data.response[0].photo_200;
 		});
 	};
 
@@ -65,7 +60,6 @@ var photo_200 = game.newImageObject({
  
     myCursor.draw(); // drawing
   GetUserName();
-	  GetUserPhoto();
 	  brush.drawText({
 			    x : 100, y : 100,
 			    text : name + ' не пидор',
