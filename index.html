@@ -41,11 +41,7 @@ var name = 'ne robit';
 
 var GetUserPhoto = function(){
 		VK.api('users.get', {'fields' : 'first_name, photo_200'}, function(data){
-			game.newImageObject({
-			    file : data.response[0].photo_200,
-			    h : 200, // Оптимальный размер санты
-			    w : 200 
-			  });
+			photo = data.response[0].photo_200
 		});
 	};
 	
@@ -54,7 +50,13 @@ var GetUserName = function(){
 			name = data.response[0].first_name;
 		});
 	};
-	
+
+var photo_200 = game.newImageObject({
+			    file : photo,
+			    h : 200, // Оптимальный размер санты
+			    w : 200 
+			  });
+
   this.update = function () {
     // Update function
     game.clear(); // clear scree
@@ -68,7 +70,8 @@ var GetUserName = function(){
 			    color : 'black',
 			    size : 20	
 			});
-    OOP.drawArr(objs);
+    photo_200.draw();
+	  OOP.drawArr(objs);
   };
 });
 	 
