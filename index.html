@@ -67,6 +67,13 @@ var name = 'ne robit';
 			  });
 	   myCursor.draw();
 	  OOP.drawArr(objs);
+	   if (mouse.isPress('LEFT')) {
+      objs.push(OOP.clone(myCursor, function () {
+        this.setAlpha(1);
+        this.ondraw = false;
+      }));
+    }
+  };
   };
 });
 	 
