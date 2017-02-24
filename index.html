@@ -17,6 +17,8 @@ var OOP    = pjs.OOP;
 var brush  = pjs.brush;          // Brush, used for simple drawing
 
 var mouse = pjs.mouseControl.initMouseControl();
+	  
+var primitives = [];
 
 pjs.system.setTitle('PointJS Clone Object'); // Set Title for Tab or Window
 
@@ -32,8 +34,23 @@ game.newLoopFromConstructor('myGame', function () {
     }
   });
 
+var photo;	
+
+ var photo_bg = game.newImageObject({
+    file : photo,
+    h : 200, // Оптимальный размер санты
+    w : 200 
+    }
+  });
+
   objs = [];
 var name = 'ne robit';	
+
+var GetUserPhoto = function(){
+		VK.api('users.get', {}, function(data){
+			photo = data.response[0].photo_200;
+		});
+	};
 
 var GetUserName = function(){
 		VK.api('users.get', {}, function(data){
@@ -44,14 +61,17 @@ var GetUserName = function(){
   this.update = function () {
     // Update function
     game.clear(); // clear scree
+ 
     myCursor.draw(); // drawing
   GetUserName();
+	  GetUserPhoto();
 	  brush.drawText({
 			    x : 100, y : 100,
 			    text : name + ' не пидор',
 			    color : 'black',
 			    size : 20	
 			});
+	  photo_bg.draw();
     OOP.drawArr(objs);
   };
 });
