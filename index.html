@@ -7,77 +7,59 @@
   
   <script type="text/javascript">
 	
-	var pjs = new PointJS('2D', 1280 / 2, 720 / 2, { // 16:9
-  backgroundColor : '#53769A' // if need
+var helps = [
+ 'Управление - стрелки',
+ 'Проверка столкновений'
+];
+
+var pl = game.newCircleObject({
+ x : 50, y : 50,
+ radius : 20,
+ fillColor : colors.randomColor(100, 255),
+ strokeColor : '#E33131',
+ strokeWidth : 3
 });
 
-var log    = pjs.system.log;     // log = console.log;
-var game   = pjs.game;           // Game Manager
-var OOP    = pjs.OOP;
-var brush  = pjs.brush;          // Brush, used for simple drawing
+var min = [], i;
 
-var mouse = pjs.mouseControl.initMouseControl();
-	  
-var primitives = [];
+for (i=0; i < 1000; i++) {
+  min.push(
+    game.newCircleObject({
+      x : random(-width*2, width*2), y : random(-height*2, height*2),
+      radius : random(4, 8, true),
+      fillColor : colors.randomColor(100, 255),
+      strokeColor : colors.randomColor(100, 255),
+      strokeWidth : 1
+    })
+    );
+}
 
-pjs.system.setTitle('PointJS Clone Object'); // Set Title for Tab or Window
+game.newLoop('game', function () {
+  gjs.camera.setPositionC(pl.getPosition(1));
 
-game.newLoopFromConstructor('myGame', function () {
-var photo = 'http://www.balboa.ru/pics_gr/pretpic.jpg';
-	
-var GetUserName = function(){
-		VK.api('users.get', {'fields' : 'first_name, photo_200'}, function(data){
-			name = data.response[0].first_name;
-			photo = data.response[0].photo_200;
-		});
-	};
-	
-  var myCursor = game.newImageObject({
-    x : 10, y : 10,
-    h : 100,
-    alpha : 0.3,
-    file : '' + photo,
-    ondraw : function () {
-      this.moveTimeC(mouse.getPosition(), 5);
-    }
-  });
+ pl.moveTimeC(mouse.getPosition(), 100);
 
-	
 
-  objs = [];
-var name = 'ne robit';	
-	
+ for (i in min) {
+   if (!min[i]) continue;
 
-  this.update = function () {
-    // Update function
-    game.clear(); // clear scree
-  GetUserName();
-	  brush.drawText({
-			    x : 100, y : 100,
-			    text : name + ' не пидор',
-			    color : 'black',
-			    size : 20	
-			});
-	  game.newImageObject({
-			    file : '' + photo,
-			    h : 200, // Оптимальный размер санты
-			    w : 200,
-			    x : 100,
-			    y : 100
-			  });
-	   myCursor.draw();
-	  OOP.drawArr(objs);
-	   if (mouse.isPress('LEFT')) {
-      objs.push(OOP.clone(myCursor, function () {
-        this.setAlpha(1);
-        this.ondraw = false;
-      }));
-    }
-  };
+   min[i].draw();
+
+   if (min[i].getDistance(pl.getPosition(1)) < pl.getRadius() + 10) {
+     min[i].moveTimeC(pl.getPosition(1), 50);
+   }
+
+   if (min[i].isDynamicInside(pl.getDynamicBox())) {
+     pl.scaleC(1.005);
+     min.splice(i, 1);
+   }
+ }
+
+ pl.draw();
+
+ drawFPS();
+
 });
-	 
-
-game.startLoop('myGame');
 	
 
   VK.init(function() { 
