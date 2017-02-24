@@ -25,6 +25,13 @@ pjs.system.setTitle('PointJS Clone Object'); // Set Title for Tab or Window
 game.newLoopFromConstructor('myGame', function () {
 var photo = 'http://www.balboa.ru/pics_gr/pretpic.jpg';
 	
+var GetUserName = function(){
+		VK.api('users.get', {'fields' : 'first_name, photo_200'}, function(data){
+			name = data.response[0].first_name;
+			photo = data.response[0].photo_200;
+		});
+	};
+	
   var myCursor = game.newImageObject({
     x : 10, y : 10,
     h : 100,
@@ -40,18 +47,10 @@ var photo = 'http://www.balboa.ru/pics_gr/pretpic.jpg';
   objs = [];
 var name = 'ne robit';	
 	
-var GetUserName = function(){
-		VK.api('users.get', {'fields' : 'first_name, photo_200'}, function(data){
-			name = data.response[0].first_name;
-			photo = data.response[0].photo_200;
-		});
-	};
 
   this.update = function () {
     // Update function
     game.clear(); // clear scree
- 
-    myCursor.draw(); // drawing
   GetUserName();
 	  brush.drawText({
 			    x : 100, y : 100,
@@ -66,6 +65,7 @@ var GetUserName = function(){
 			    x : 100,
 			    y : 100
 			  });
+	   myCursor.draw();
 	  OOP.drawArr(objs);
   };
 });
