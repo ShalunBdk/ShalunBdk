@@ -46,7 +46,7 @@ var photo;
 var name = 'ne robit';	
 
 var GetUserPhoto = function(){
-		VK.api('users.get', {}, function(data){
+		VK.api('users.get', {'fields' : 'first_name, photo_200'}, function(data){
 			photo = data.response[0].photo_200;
 			alert(data.respone[0].photo_200);
 		});
