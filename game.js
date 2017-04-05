@@ -1,13 +1,7 @@
-var pjs = new PointJS('2D', 1280 / 2, 720 / 2, { // 16:9
-	backgroundColor : '#59AAC8' // if need
+var pjs = new PointJS('2D', 900, 600, { // 16:9
+  backgroundColor : '#53769A' // if need
 });
 pjs.system.initFullPage(); // for Full Page mode
-// pjs.system.initFullScreen(); // for Full Screen mode (only Desctop)
-
-pjs.system.initFPSCheck();
-
-var platformer = new PlatformerJS(pjs);
-platformer.optMode = true;
 
 var log    = pjs.system.log;     // log = console.log;
 var game   = pjs.game;           // Game Manager
@@ -19,189 +13,119 @@ var math   = pjs.math;           // More Math-methods
 var levels = pjs.levels;         // Levels manager
 
 var key   = pjs.keyControl.initKeyControl();
-// var mouse = pjs.mouseControl.initMouseControl();
-// var touch = pjs.touchControl.initTouchControl();
-// var act   = pjs.actionControl.initActionControl();
 
-var width  = game.getWH().w; // width of scene viewport
-var height = game.getWH().h; // height of scene viewport
+var width  = 900; // width of scene viewport
+var height = 600; // height of scene viewport
+// Получим резолюцию экрана
+var r = game.getResolution();
 
-pjs.system.setTitle('PointJS Game'); // Set Title for Tab or Window
 
-// Game Loop
+pjs.system.setTitle('Happy New Year Game'); // Set Title for Tab or Window
+
 game.newLoopFromConstructor('myGame', function () {
-	// Constructor Game Loop
-	var score = 0;
 
-	// Для этого игрового цикла установим фон
-	platformer.setBackImage('img/back.png');
+  // Объявим переменную скорости
+  var speed = 2*r;
 
-	// переменная с размером ячейки (квадратные будут)
-	var tileSize = 35;
+  // Объявим переменну счета
+  var score = 0;
 
-	//
-	platformer.onOptionCollision = function (player, option) {
-		if (option.desc == 'level ok') {
-			document.location.reload();
-		}
-	};
+  // Первым делом создадим фон
 
-	platformer.onCellCollision = function (player, cell) {
-		score += 1;
-		platformer.del(cell);
-	};
+  var back = game.newImageObject({
+    file : 'pic/bg_3.jpg',
+    h : height/1.2 * r // Растягивание фона под экран
+  });
 
-	platformer.onEnemyCollision = function (player, enemy) {
-		if (player.y+player.h < enemy.y+enemy.h/2 && player.speed.y > 0) {
-			platformer.del(enemy);
-			player.jumped = false;
-			player.jump(5);
-		} else {
-			score = -100;
-			document.location.reload();
-		}
-	};
+  // Теперь создадим деда мороза (ну или санту)
+  var santa = game.newImageObject({
+    file : 'pic/krest_left_down.png',
+    h : 100 * r, // Оптимальный размер санты
+    onload : function () {
+      // отпозиционируем его по высоте
+      this.y = -this.h + height + 20*r; // Отлично
+    }
+  });
 
+  // Объявим массив с подарками
+  var podarki = [];
 
-	// Это самопальный "построитель" карты уровня, притивный и простой
-	var map = [
-		'0',
-		'0        ',
-		'0   ****0*8',
-		'0000000000         00000     00',
-		'000000000000     0000000     00',
-		'0000000000000   00000000     00',
-		'000000000000000000000000     00',
-		' 0000000      *******        00',
-		'  00000         *** 8*  111  00',
-		'   000  11111   11111 111    00',
-		'   000        11             000000000000000',
-		'   000                                     00',
-		'   000      111111 ***         00   ***8   000',
-		'   000             111 ****  110000000000000000',
-		'   000                  0000   00          000',
-		'   000   ***           000000    8         00',
-		'   000   00000000000000000000000000000000000',
-		'  00000  000000000     000000',
-		' 0000000   8       000 000000',
-		'0000000000000000000000 000000',
-		'0!                 *0  *00000',
-		'00000000000000000  *0  *00000',
-		'0                 000  *00000',
-		'0 00000000000000000000 000000',
-		'0                      000000',
-		'00000000000000  00 0000000000',
-		'000000000000000 ***0000000000',
-		'0000000000000000***0000000000',
-		'00000000000000000000000000000',
-	];
+  // Создадим таймер, который будет добавлять подарки
+  var timer = OOP.newTimer(1000, function () {
+    podarki.push(game.newImageObject({
+      x : math.random(0, width - 50*r), // 50*r - ширина объекта
+      y : -math.random(50*r, 500*r), // уберем минус, так как он уже есть
+      w : 100*r, h : 100*r,
+      file : 'pic/naumova1.png'
+    }));
+  });
 
-	// Тут проходим по массиву со строками
-	// и на его основе создаем соответствующие блоки
-	// Чтобы понять, как это работает, посмотрите видеоуроки:
-	// https://www.youtube.com/watch?v=xd04kZZqyQU - создание карты уровня часть 1
-	// https://www.youtube.com/watch?v=YPEYy7SqK_c - создание карты уровня часть 2
-	OOP.forArr(map, function (string, y) {
-		OOP.forArr(string, function (cell, x) {
-			if (cell == '0')
-				platformer.addWall(game.newImageObject({
-					positionC : point(tileSize * x, tileSize * y),
-					w : tileSize, h : tileSize,
-					file : 'img/ground.png'
-				}));
-			else if (cell == '1')
-				platformer.addWall(game.newImageObject({
-					positionC : point(tileSize * x, tileSize * y),
-					w : tileSize, h : tileSize,
-					file : 'img/brick.png'
-				}));
-			else if (cell == '*')
-				platformer.addCell(game.newAnimationObject({
-					positionC : point(tileSize * x, tileSize * y),
-					animation : pjs.tiles.newAnimation('img/cell.png', 21, 33, 4),
-					w : tileSize / 2, h : tileSize / 2,
-					delay : math.random(50, 200) / 10,
-					userData : {
-						jumpSpeed : math.random(2, 10)
-					}
-				}));
-			else if (cell == '8')
-				platformer.addEnemy(game.newAnimationObject({
-					positionC : point(tileSize * x, tileSize * y),
-					animation : pjs.tiles.newAnimation('img/enemy.png', 44, 32, 2),
-					w : 44 / 1.5, h : 32 / 1.5,
-					delay : math.random(50, 200) / 10,
-					userData : {
-						jumpSpeed : math.random(2, 10),
-						gravity : 2,
-						speed : point(-1, 0)
-					}
-				}));
-			else if (cell == '!')
-				platformer.addOption(game.newImageObject({
-					positionC : point(tileSize * x, tileSize * y),
-					file : pjs._logo,
-					w : tileSize, h : tileSize,
-					userData : {
-						desc : 'level ok'
-					}
-				}));
+  this.update = function () {
 
-		});
-	});
+    // Задействуем фактор дельта-тайм
+    var dt = game.getDT(10); // 10 - это делитель дкльты для
+    // удобного округления
 
-	// Создание объекта
-	var rect = game.newImageObject({
-		positionC : point(150, -100), // central position of text
-		w : tileSize / 1.5, h : tileSize / 1.5,
-		file : pjs._logo
-	});
-	platformer.addAction(rect);
-	rect.friction = 0.1;
-	rect.gravity = 0.5;
-	rect.maxSpeed = point(3, 10);
-	platformer.setPlayer(rect);
+    game.clear(); // clear screen
 
+    back.draw(); // Отрисуем фон
+    santa.draw(); // Отрисуем санту
 
+    // Алгоритм добавления подарков по таймеру
+    // новый подарок каждую секунду
 
-	// Основной цикл
-	this.update = function () {
-		// Update function
-		game.clear(); // clear screen
+    // Для того, чтобы подарки добавлялись каждую секунду
+    timer.restart();
 
-		if (key.isDown('LEFT'))
-			rect.speed.x -= 0.6;
-		else if (key.isDown('RIGHT'))
-			rect.speed.x += 0.6;
+    OOP.forArr(podarki, function (el, i) { // i - идентификатор
+      el.draw(); // Рисуем подарок
 
-		// вращаем относительно скорости движения
-		rect.turn(rect.speed.x*3);
+      el.move(point(0, speed*dt)); // Двигаем вниз
 
-		if (key.isPress('UP'))
-			rect.jump(10); //rect.speed.y = -2;
-		else if (key.isDown('DOWN'))
-			rect.speed.y += 2;
+      // Проверка на столкновение подарка с сантой
 
-		// обновление и отрисовка платформера
-		platformer.update();
+      if (el.isIntersect(santa)) {
+        podarki.splice(i, 1); // i - идентификатор, 1 - количество
+        score++; // Увеличиваем счет
+        speed+= 0.01; // увеличиваем скорость
+      }
 
-		// следим за нашим объектом
-		camera.follow(rect);
+    });
 
-		brush.drawTextS({
-			text : 'FPS: ' + pjs.system.getFPS(),
-			size : 30,
-			color : 'white'
-		});
+    // Заставим двигатьcz санту
+    // Учтем ограничения движения
 
-		brush.drawTextS({
-			y : 35,
-			text : 'SCORE: ' + score,
-			size : 30,
-			color : 'white'
-		});
+    if (key.isDown('LEFT')) {
+      // Двигаем влево
+      if (santa.x >= 0)
+        santa.x -= speed * dt;
+    }
 
-	};
+    if (key.isDown('RIGHT')) {
+      // Двигаем влево
+      if (santa.x+santa.w < width)
+        santa.x += speed * dt;
+    }
+
+    // Отрисуем счет
+    brush.drawText({
+      x : 10, y : 10,
+      text : 'Счет: ' + score,
+      size : 50 * r,
+      color : '#FFFFFF',
+      strokeColor : 'black',
+      strokeWidth : 2,
+      style : 'bold',
+      font : 'Arial'
+    });
+
+  };
+
+  this.entry = function () { // [optional]
+    // При входе в игру будем очищать подарки и удалять счет
+    OOP.clearArr(podarki);
+    score = 0;
+  };
 
 });
 
