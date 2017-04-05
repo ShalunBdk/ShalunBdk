@@ -27,6 +27,7 @@ game.newLoopFromConstructor('myGame', function () {
 	var GAME = 0;
 	var MAX_SCORE;
 	var MAX_NAME = '';
+	var NAME = '';
   // Объявим переменную скорости
   var speed = 2;
 	var direction = 1;
@@ -59,7 +60,10 @@ game.newLoopFromConstructor('myGame', function () {
   });
 
   this.update = function () {
-
+	
+	VK.api("users.get", {'fields': 'first_name', 'last_name'}, function(data) {
+			NAME = '' + data.response[0].first_name + ' ' + data.response[0].last_name;
+		});
     // Задействуем фактор дельта-тайм
     var dt = game.getDT(10); // 10 - это делитель дкльты для
     // удобного округления
@@ -188,9 +192,6 @@ game.newLoopFromConstructor('myGame', function () {
 		if (key.isDown('ENTER')) {
 			GAME = 1;
 		}
-		VK.api("users.get", {'fields': 'first_name, last_name'}, function(data) {
-			var NAME = '' + data.response[0].first_name + ' ' + data.response[0].last_name;
-		});
 	}
 
   };
