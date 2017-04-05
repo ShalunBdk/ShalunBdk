@@ -190,7 +190,7 @@ game.newLoopFromConstructor('myGame', function () {
 		}
 		VK.api("users.get", {'fields': 'first_name, last_name'}, function(data) {
 			var NAME = '' + data.response[0].first_name + ' ' + data.response[0].last_name;
-		}
+		});
 	}
 
   };
