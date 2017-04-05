@@ -40,10 +40,10 @@ game.newLoopFromConstructor('myGame', function () {
   // Теперь создадим деда мороза (ну или санту)
   var santa = game.newImageObject({
     file : 'pic/krest_left_down.png',
-    h : 100 * r, // Оптимальный размер санты
+    h : 150, // Оптимальный размер санты
     onload : function () {
       // отпозиционируем его по высоте
-      this.y = -this.h + height + r; // Отлично
+      this.y = -this.h + height; // Отлично
     }
   });
 
@@ -53,9 +53,9 @@ game.newLoopFromConstructor('myGame', function () {
   // Создадим таймер, который будет добавлять подарки
   var timer = OOP.newTimer(1000, function () {
     podarki.push(game.newImageObject({
-      x : math.random(0, width - 50*r), // 50*r - ширина объекта
-      y : -math.random(50*r, 500*r), // уберем минус, так как он уже есть
-      w : 100*r, h : 100*r,
+      x : math.random(0, width - 200), // 50*r - ширина объекта
+      y : -math.random(50, 500), // уберем минус, так как он уже есть
+      w : 150, h : 150,
       file : 'pic/naumova1.png'
     }));
   });
