@@ -76,7 +76,8 @@ game.newLoopFromConstructor('myGame', function () {
 	if(direction == 0) santa.setFlip(true, false);
 	if(direction == 1) santa.setFlip(false, false);
 	santa.draw(); // Отрисуем санту
-
+	
+	
     // Алгоритм добавления подарков по таймеру
     // новый подарок каждую секунду
 
@@ -85,7 +86,6 @@ game.newLoopFromConstructor('myGame', function () {
 
     OOP.forArr(podarki, function (el, i) { // i - идентификатор
       el.draw(); // Рисуем подарок
-
       el.move(point(0, speed*dt)); // Двигаем вниз
 
       // Проверка на столкновение подарка с сантой
