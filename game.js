@@ -27,7 +27,7 @@ game.newLoopFromConstructor('myGame', function () {
 	var GAME = 0;
 
   // Объявим переменную скорости
-  var speed = 2*r;
+  var speed = 0;
 
   // Объявим переменну счета
   var score = 0;
@@ -70,9 +70,25 @@ game.newLoopFromConstructor('myGame', function () {
 
     game.clear(); // clear screen
 	
-	if(GAME == 1){
 
     back.draw(); // Отрисуем фон
+	if(speed == 0){
+		brush.drawText({
+		  x : 200, y : 50,
+		  text : 'Для старта нажмите мышкой',
+		  size : 25,
+		  color : '#FFFFFF',
+		  strokeColor : 'black',
+		  strokeWidth : 2,
+		  style : 'bold',
+		  font : 'Arial'
+		});
+		if (mouse.isDown('LEFT')) {
+		  speed = 2;
+		}
+		
+		
+	}
     santa.draw(); // Отрисуем санту
 
     // Алгоритм добавления подарков по таймеру
@@ -123,22 +139,6 @@ game.newLoopFromConstructor('myGame', function () {
       style : 'bold',
       font : 'Arial'
     });
-	
-	} else if (GAME == 0){
-		 brush.drawText({
-		  x : 100, y : height/2,
-		  text : 'Для начала игры нажмите левой кнопкой мыши',
-		  size : 30,
-		  color : '#FFFFFF',
-		  strokeColor : 'black',
-		  strokeWidth : 2,
-		  style : 'bold',
-		  font : 'Arial'
-		});
-		if (mouse.isDown('LEFT')) {
-		GAME = 1;
-    }
-	}
 
   };
 
