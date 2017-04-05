@@ -18,14 +18,15 @@ var width  = 900; // width of scene viewport
 var height = 600; // height of scene viewport
 // Получим резолюцию экрана
 var r = game.getResolution();
-
+var lm = pjs.memory.local;
 
 pjs.system.setTitle('Happy New Year Game'); // Set Title for Tab or Window
 
 game.newLoopFromConstructor('myGame', function () {
 
 	var GAME = 0;
-
+	var MAX_SCORE;
+	var MAX_NAME = '';
   // Объявим переменную скорости
   var speed = 2;
 	var direction = 1;
@@ -52,7 +53,7 @@ game.newLoopFromConstructor('myGame', function () {
     podarki.push(game.newImageObject({
       x : math.random(0, width - 200), // 50*r - ширина объекта
       y : -math.random(50, 500), // уберем минус, так как он уже есть
-      w : 150, h : 150,
+      w : 120, h : 120,
       file : 'pic/naumova1.png'
     }));
   });
@@ -77,6 +78,10 @@ game.newLoopFromConstructor('myGame', function () {
 	if(direction == 1) santa.setFlip(false, false);
 	santa.draw(); // Отрисуем санту
 	
+	if(score > lm.load('MAX_SCORE')){
+		lm.save('MAX_SCORE',score);
+		lm.save('MAX_NAME', NAME);
+	}
 	
     // Алгоритм добавления подарков по таймеру
     // новый подарок каждую секунду
@@ -97,7 +102,8 @@ game.newLoopFromConstructor('myGame', function () {
       }
 
     });
-
+	
+	
     // Заставим двигатьcz санту
     // Учтем ограничения движения
 
@@ -156,11 +162,34 @@ game.newLoopFromConstructor('myGame', function () {
 		  style : 'bold',
 		  font : 'Arial'
 		});
+		brush.drawText({
+		  x : 830, y : 30,
+		  text : '' + lm.load('MAX_SCORE'),
+		  size : 50,
+		  color : '#FFFFFF',
+		  strokeColor : 'black',
+		  strokeWidth : 2,
+		  style : 'bold',
+		  font : 'Arial'
+		});
+		brush.drawText({
+		  x : 150, y : 500,
+		  text : '' + lm.load('MAX_NAME'),
+		  size : 50,
+		  color : '#FFFFFF',
+		  strokeColor : 'black',
+		  strokeWidth : 2,
+		  style : 'bold',
+		  font : 'Arial'
+		});
 		if (mouse.isPeekObject('LEFT', game_buttom)) {
 			GAME = 1;
 		}
 		if (key.isDown('ENTER')) {
 			GAME = 1;
+		}
+		VK.api("users.get", {'fields': 'first_name, last_name'}, function(data) {
+			var NAME = '' + data.response[0].first_name + ' ' + data.response[0].last_name;
 		}
 	}
 
