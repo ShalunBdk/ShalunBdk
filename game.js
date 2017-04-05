@@ -144,7 +144,7 @@ game.newLoopFromConstructor('myGame', function () {
 
   this.entry = function () { // [optional]
     // При входе в игру будем очищать подарки и удалять счет
-	
+	GAME = 0;
     OOP.clearArr(podarki);
     score = 0;
   };
