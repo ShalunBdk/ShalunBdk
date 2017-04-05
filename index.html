@@ -1,26 +1,13 @@
 <!DOCTYPE html>
 <html>
-
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width,user-scalable=no"/>
+	<title>PointJS Game</title>
+</head>
 <body>
-  <script src="https://vk.com/js/api/xd_connection.js?2"  type="text/javascript"></script>
-  <script type="text/javascript" src="point.js"> </script>
-  
-  <script type="text/javascript">
-	
-var pjs = new PointJS('2D', 1280 / 2, 720 / 2, { // 16:9
-  backgroundColor : '#FF00FF' // if need
-});
-
-game.startLoop('myGame');
-	
-
-  VK.init(function() { 
-    console.log('ALL GOOD');
-  }, function() { 
-	console.log('NOT ALL GOOD');
-}, '5.62'); 
-
-	</script>
-  
-</body>  
+<script type="text/javascript" src="point.js"></script>
+<script type="text/javascript" src="platformer.js"></script>
+<script type="text/javascript" src="game.js"></script>
+</body>
 </html>
