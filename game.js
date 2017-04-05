@@ -1,7 +1,6 @@
 var pjs = new PointJS('2D', 900, 600, { // 16:9
   backgroundColor : '#53769A' // if need
 });
-pjs.system.initFullPage(); // for Full Page mode
 
 var log    = pjs.system.log;     // log = console.log;
 var game   = pjs.game;           // Game Manager
