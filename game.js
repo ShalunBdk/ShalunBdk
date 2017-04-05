@@ -27,17 +27,12 @@ game.newLoopFromConstructor('myGame', function () {
 	var GAME = 0;
 
   // Объявим переменную скорости
-  var speed = 0;
+  var speed = 2;
 
   // Объявим переменну счета
   var score = 0;
 
   // Первым делом создадим фон
-
-  var back = game.newImageObject({
-    file : 'pic/bg_3.jpg',
-    h : 600 // Растягивание фона под экран
-  });
 
   // Теперь создадим деда мороза (ну или санту)
   var santa = game.newImageObject({
@@ -69,26 +64,15 @@ game.newLoopFromConstructor('myGame', function () {
     // удобного округления
 
     game.clear(); // clear screen
-	
 
+	if(GAME == 1){
+	
+	var back = game.newImageObject({
+    file : 'pic/bg_3.jpg',
+    h : 600 // Растягивание фона под экран
+	});
+	
     back.draw(); // Отрисуем фон
-	if(speed == 0){
-		brush.drawText({
-		  x : 200, y : 50,
-		  text : 'Для старта нажмите мышкой',
-		  size : 25,
-		  color : '#FFFFFF',
-		  strokeColor : 'black',
-		  strokeWidth : 2,
-		  style : 'bold',
-		  font : 'Arial'
-		});
-		if (mouse.isDown('LEFT')) {
-		  speed = 2;
-		}
-		
-		
-	}
     santa.draw(); // Отрисуем санту
 
     // Алгоритм добавления подарков по таймеру
@@ -127,6 +111,9 @@ game.newLoopFromConstructor('myGame', function () {
         santa.x += speed * dt;
     }
 	
+	if (key.isDown('ESC')) {
+      GAME = 0;
+    }
 
     // Отрисуем счет
     brush.drawText({
@@ -139,6 +126,39 @@ game.newLoopFromConstructor('myGame', function () {
       style : 'bold',
       font : 'Arial'
     });
+	
+	} else if(GAME == 0){
+		back = game.newImageObject({
+		file : 'pic/menu_game.png',
+		h : 600,
+		w : 900
+		});
+		back.draw();
+		var game_buttom = game.newImageObject({
+			file : 'pic/game_buttom.png',
+			h : 114,
+			w : 305,
+			x : 285,
+			y : 180
+		});
+		game_buttom.draw();
+		brush.drawText({
+		  x : 150, y : 30,
+		  text : '' + score,
+		  size : 50,
+		  color : '#FFFFFF',
+		  strokeColor : 'black',
+		  strokeWidth : 2,
+		  style : 'bold',
+		  font : 'Arial'
+		});
+		if (mouse.isPeekObject('LEFT', game_buttom)) {
+			GAME = 1;
+		}
+		if (key.isDown('ENTER')) {
+			GAME = 1;
+		}
+	}
 
   };
 
