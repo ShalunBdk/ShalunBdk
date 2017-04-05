@@ -58,12 +58,13 @@ game.newLoopFromConstructor('myGame', function () {
       file : 'pic/naumova1.png'
     }));
   });
-
-  this.update = function () {
 	
 	VK.api("users.get", {'fields': 'first_name, last_name'}, function(data) {
 			NAME = '' + data.response[0].first_name + ' ' + data.response[0].last_name;
 		});
+		
+  this.update = function () {
+
     // Задействуем фактор дельта-тайм
     var dt = game.getDT(10); // 10 - это делитель дкльты для
     // удобного округления
