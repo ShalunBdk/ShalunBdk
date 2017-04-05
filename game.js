@@ -34,7 +34,7 @@ game.newLoopFromConstructor('myGame', function () {
 
   var back = game.newImageObject({
     file : 'pic/bg_3.jpg',
-    h : height/1.2 * r // Растягивание фона под экран
+    h : 600 // Растягивание фона под экран
   });
 
   // Теперь создадим деда мороза (ну или санту)
@@ -43,7 +43,7 @@ game.newLoopFromConstructor('myGame', function () {
     h : 100 * r, // Оптимальный размер санты
     onload : function () {
       // отпозиционируем его по высоте
-      this.y = -this.h + height + 20*r; // Отлично
+      this.y = -this.h + height + r; // Отлично
     }
   });
 
