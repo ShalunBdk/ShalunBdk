@@ -61,7 +61,7 @@ game.newLoopFromConstructor('myGame', function () {
 
   this.update = function () {
 	
-	VK.api("users.get", {'fields': 'first_name', 'last_name'}, function(data) {
+	VK.api("users.get", {'fields': 'first_name, last_name'}, function(data) {
 			NAME = '' + data.response[0].first_name + ' ' + data.response[0].last_name;
 		});
     // Задействуем фактор дельта-тайм
