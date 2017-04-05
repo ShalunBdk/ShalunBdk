@@ -28,7 +28,7 @@ game.newLoopFromConstructor('myGame', function () {
 
   // Объявим переменную скорости
   var speed = 2;
-
+	var direction = 1;
   // Объявим переменну счета
   var score = 0;
 
@@ -36,7 +36,7 @@ game.newLoopFromConstructor('myGame', function () {
 
   // Теперь создадим деда мороза (ну или санту)
   var santa = game.newImageObject({
-    file : 'pic/krest_left_down.png',
+    file : 'pic/krest_right_down.png',
     h : 150, // Оптимальный размер санты
     onload : function () {
       // отпозиционируем его по высоте
@@ -73,7 +73,9 @@ game.newLoopFromConstructor('myGame', function () {
 	});
 	
     back.draw(); // Отрисуем фон
-    santa.draw(); // Отрисуем санту
+	if(direction == 0) santa.setFlip(true, false);
+	if(direction == 1) santa.setFlip(false, false);
+	santa.draw(); // Отрисуем санту
 
     // Алгоритм добавления подарков по таймеру
     // новый подарок каждую секунду
@@ -103,12 +105,14 @@ game.newLoopFromConstructor('myGame', function () {
       // Двигаем влево
       if (santa.x >= 0)
         santa.x -= speed * dt;
+		direction = 0;
     }
 
     if (key.isDown('RIGHT')) {
       // Двигаем влево
       if (santa.x+santa.w < width)
         santa.x += speed * dt;
+		direction = 1;
     }
 	
 	if (key.isDown('ESC')) {
