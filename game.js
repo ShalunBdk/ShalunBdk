@@ -12,6 +12,7 @@ var math   = pjs.math;           // More Math-methods
 var levels = pjs.levels;         // Levels manager
 
 var key   = pjs.keyControl.initKeyControl();
+var mouse = pjs.mouseControl.initMouseControl();
 
 var width  = 900; // width of scene viewport
 var height = 600; // height of scene viewport
@@ -22,6 +23,8 @@ var r = game.getResolution();
 pjs.system.setTitle('Happy New Year Game'); // Set Title for Tab or Window
 
 game.newLoopFromConstructor('myGame', function () {
+
+	var GAME = 0;
 
   // Объявим переменную скорости
   var speed = 2*r;
@@ -66,6 +69,8 @@ game.newLoopFromConstructor('myGame', function () {
     // удобного округления
 
     game.clear(); // clear screen
+	
+	if(GAME == 1){
 
     back.draw(); // Отрисуем фон
     santa.draw(); // Отрисуем санту
@@ -105,6 +110,7 @@ game.newLoopFromConstructor('myGame', function () {
       if (santa.x+santa.w < width)
         santa.x += speed * dt;
     }
+	
 
     // Отрисуем счет
     brush.drawText({
@@ -117,11 +123,28 @@ game.newLoopFromConstructor('myGame', function () {
       style : 'bold',
       font : 'Arial'
     });
+	
+	} else if (GAME == 0){
+		 brush.drawText({
+		  x : 100, y : height/2,
+		  text : 'Для начала игры нажмите левой кнопкой мыши',
+		  size : 30,
+		  color : '#FFFFFF',
+		  strokeColor : 'black',
+		  strokeWidth : 2,
+		  style : 'bold',
+		  font : 'Arial'
+		});
+		if (mouse.isDown('LEFT')) {
+		GAME = 1;
+    }
+	}
 
   };
 
   this.entry = function () { // [optional]
     // При входе в игру будем очищать подарки и удалять счет
+	
     OOP.clearArr(podarki);
     score = 0;
   };
