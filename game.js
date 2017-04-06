@@ -37,7 +37,7 @@ game.newLoopFromConstructor('myGame', function () {
 	var GAME = 0;
 	var MAX_SCORE = 0;
 	var MAX_NAME = 'Админ';
-	var MAX_AVATAR = 'https://pp.userapi.com/c633430/v633430900/516c0/Mihe83TWzIg.jpg'; 
+	var MAX_AVATAR = ''; 
 	
 	var speed = 3;
 	var speedG = 2;
@@ -132,6 +132,7 @@ game.newLoopFromConstructor('myGame', function () {
 	
     if(health == 0){
 		GAME = 2;
+		save();
 		score = 0;
 		health = 3;
 		OOP.clearArr(podarki);
