@@ -29,17 +29,22 @@ game.newLoopFromConstructor('myGame', function () {
 		id : '',
 		name : 'none',
 		avatar : '',
-		loaded : false
+		loaded : true
 	};
 
 	var GAME = 0;
 	var MAX_SCORE = 0;
 	var MAX_NAME = 'Админ';
 
-	var speed = 2;
+	var speed = 3;
+	var speedG = 2;
 	var direction = 1;
-
+	
+	var dev = false;
+	
 	var score = 0;
+	
+	var health = 3;
 	
 	var save = function(){
 		VK.api("storage.set", {global : 1, key : 'MAX_SCOR', value : MAX_SCORE}, function(data) {
@@ -70,7 +75,7 @@ game.newLoopFromConstructor('myGame', function () {
   var timer = OOP.newTimer(1000, function () {
     podarki.push(game.newImageObject({
       x : math.random(0, width - 200), // 50*r - ширина объекта
-      y : -math.random(50, 500), // уберем минус, так как он уже есть
+      y : -math.random(200, 600), // уберем минус, так как он уже есть
       w : 120, h : 120,
       file : 'pic/naumova1.png'
     }));
@@ -104,14 +109,24 @@ game.newLoopFromConstructor('myGame', function () {
 		user.score = score;
 	}
 	
-    
+    if(health == 0){
+		GAME = 2;
+		score = 0;
+		health = 3;
+		OOP.clearArr(podarki);
+	}
 	
     timer.restart();
 
     OOP.forArr(podarki, function (el, i) { // i - идентификатор
       el.draw(); // Рисуем подарок
-      el.move(point(0, speed*dt)); // Двигаем вниз
-
+      el.move(point(0, speedG*dt)); // Двигаем вниз
+		
+		if(el.y > height + el.h){
+			el.y = -math.random(200, 600);
+			health -= 1;
+			podarki.splice(i, 1);
+		}
       // Проверка на столкновение подарка с сантой
 
       if (el.isIntersect(santa)) {
@@ -153,6 +168,29 @@ game.newLoopFromConstructor('myGame', function () {
       style : 'bold',
       font : 'Arial'
     });
+	
+		if(dev == true){
+			brush.drawText({
+			  x : 10, y : 110,
+			  text : 'hp: ' + health,
+			  size : 30,
+			  color : '#FFFFFF',
+			  strokeColor : 'black',
+			  strokeWidth : 2,
+			  style : 'bold',
+			  font : 'Arial'
+			});
+			brush.drawText({
+			  x : 10, y : 210,
+			  text : 'naum massive: ' + podarki.length,
+			  size : 30,
+			  color : '#FFFFFF',
+			  strokeColor : 'black',
+			  strokeWidth : 2,
+			  style : 'bold',
+			  font : 'Arial'
+			});
+		}
 	
 	} else if(GAME == 0 && user.loaded){
 		back = game.newImageObject({
@@ -199,11 +237,26 @@ game.newLoopFromConstructor('myGame', function () {
 		  style : 'bold',
 		  font : 'Arial'
 		});
+		if(dev == true){
+			brush.drawText({
+			  x : 750, y : 130,
+			  text : 'dev true',
+			  size : 30,
+			  color : '#FFFFFF',
+			  strokeColor : 'black',
+			  strokeWidth : 2,
+			  style : 'bold',
+			  font : 'Arial'
+			});
+		}
 		if (mouse.isPeekObject('LEFT', game_buttom)) {
 			GAME = 1;
 		}
 		if (key.isDown('ENTER')) {
 			GAME = 1;
+		}
+		if (key.isDown('D')) {
+			dev = true;
 		}
 	}else if(GAME == 0 && user.loaded == false){
 		
@@ -217,6 +270,20 @@ game.newLoopFromConstructor('myGame', function () {
 		  style : 'bold',
 		  font : 'Arial'
 		});
+	}else if(GAME == 2){
+		brush.drawText({
+		  x : 150, y : 30,
+		  text : 'будет экран проигрыша | Для продолжения нажмите ENTER',
+		  size : 25,
+		  color : '#FFFFFF',
+		  strokeColor : 'black',
+		  strokeWidth : 2,
+		  style : 'bold',
+		  font : 'Arial'
+		});
+		if (key.isDown('ENTER')) {
+			GAME = 0;
+		}
 	}
 
   };
@@ -241,7 +308,7 @@ game.newLoopFromConstructor('myGame', function () {
 			user.score = data.response;
 			console.log(data.response);
 		});
-	GAME = 0;
+	if(pjs.resources.isLoaded() == true)GAME = 0;
     OOP.clearArr(podarki);
     score = 0;
   };
