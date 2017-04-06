@@ -80,6 +80,14 @@ game.newLoopFromConstructor('myGame', function () {
 	y : 500
   });
   
+  var heal = game.newImageObject({
+    file : 'pic/health.png',
+	x : 800,
+	y : 100,
+	w : 50,
+	h : 50
+  });
+  
   // Объявим массив с подарками
   var podarki = [];
 
@@ -129,13 +137,35 @@ game.newLoopFromConstructor('myGame', function () {
 		OOP.clearArr(podarki);
 	}
 	
+	if(health == 1) {
+		heal.simpleDraw( point(850, 10) );
+	}else if(health == 2){
+		heal.simpleDraw( point(850, 10) );
+		heal.simpleDraw( point(800, 10) );
+	}else if(health == 3){
+		heal.simpleDraw( point(850, 10) );
+		heal.simpleDraw( point(800, 10) );
+		heal.simpleDraw( point(750, 10) );
+	}else if(health == 4){
+		heal.simpleDraw( point(850, 10) );
+		heal.simpleDraw( point(800, 10) );
+		heal.simpleDraw( point(750, 10) );
+		heal.simpleDraw( point(700, 10) );
+	}else if(health == 5){
+		heal.simpleDraw( point(850, 10) );
+		heal.simpleDraw( point(800, 10) );
+		heal.simpleDraw( point(750, 10) );
+		heal.simpleDraw( point(700, 10) );
+		heal.simpleDraw( point(650, 10) );
+	}
+	
     timer.restart();
 
     OOP.forArr(podarki, function (el, i) { // i - идентификатор
       el.draw(); // Рисуем подарок
       el.move(point(0, speedG*dt)); // Двигаем вниз
 		
-		if(el.y > height + el.h){
+		if(el.y > height){
 			el.y = -math.random(200, 600);
 			health -= 1;
 			podarki.splice(i, 1);
