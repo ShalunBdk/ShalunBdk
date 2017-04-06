@@ -35,16 +35,22 @@ game.newLoopFromConstructor('myGame', function () {
 	var GAME = 0;
 	var MAX_SCORE;
 	var MAX_NAME = '';
-	var NAME = '';
-  // Объявим переменную скорости
-  var speed = 2;
+
+	var speed = 2;
 	var direction = 1;
-  // Объявим переменну счета
-  var score = 0;
 
-  // Первым делом создадим фон
-
-  // Теперь создадим деда мороза (ну или санту)
+	var score = 0;
+	
+	var save = function(){
+		VK.api("storage.set", {global : 1, key : 'MAX_SCORE', value : MAX_SCORE}, function(data) {
+			console.log('РЕКОРД ОБНОВЛЕН');
+		});
+		VK.api("storage.set", {user_id, key : 'MAX_NAME', value : name}, function(data) {
+			console.log('NAME РЕКОРД ОБНОВЛЕН');
+		});
+	}
+	
+	
   var santa = game.newImageObject({
     file : 'pic/krest_right_down.png',
     h : 150, // Оптимальный размер санты
@@ -66,10 +72,7 @@ game.newLoopFromConstructor('myGame', function () {
       file : 'pic/naumova1.png'
     }));
   });
-	
-	VK.api("users.get", {'fields': 'first_name, last_name'}, function(data) {
-			NAME = '' + data.response[0].first_name + ' ' + data.response[0].last_name;
-		});
+  
   this.update = function () {
 
     // Задействуем фактор дельта-тайм
@@ -90,15 +93,12 @@ game.newLoopFromConstructor('myGame', function () {
 	if(direction == 1) santa.setFlip(false, false);
 	santa.draw(); // Отрисуем санту
 	
-	if(score > lm.load('MAX_SCORE')){
-		lm.save('MAX_SCORE',score);
-		lm.save('MAX_NAME', NAME);
+	if(score > MAX_SCORE){
+		MAX_SCORE = score;
 	}
 	
-    // Алгоритм добавления подарков по таймеру
-    // новый подарок каждую секунду
-
-    // Для того, чтобы подарки добавлялись каждую секунду
+    
+	
     timer.restart();
 
     OOP.forArr(podarki, function (el, i) { // i - идентификатор
@@ -134,7 +134,8 @@ game.newLoopFromConstructor('myGame', function () {
     }
 	
 	if (key.isDown('ESC')) {
-      GAME = 0;
+		save();
+		GAME = 0;
     }
 
     // Отрисуем счет
@@ -176,7 +177,7 @@ game.newLoopFromConstructor('myGame', function () {
 		});
 		brush.drawText({
 		  x : 830, y : 30,
-		  text : '' + lm.load('MAX_SCORE'),
+		  text : '' + MAX_SCORE,
 		  size : 50,
 		  color : '#FFFFFF',
 		  strokeColor : 'black',
@@ -186,7 +187,7 @@ game.newLoopFromConstructor('myGame', function () {
 		});
 		brush.drawText({
 		  x : 150, y : 500,
-		  text : '' + lm.load('MAX_NAME'),
+		  text : '' + MAX_NAME,
 		  size : 50,
 		  color : '#FFFFFF',
 		  strokeColor : 'black',
@@ -222,6 +223,10 @@ game.newLoopFromConstructor('myGame', function () {
 			user.id = '' + data.response[0].id;
 			user.avatar = '' + data.response[0].photo_50;
 			user.loaded = true;
+		});
+	VK.api("storage.get", {global: 1, keys : 'MAX_NAME, MAX_SCORE'}, function(data) {
+			MAX_NAME = data.response[0].MAX_NAME;
+			MAX_SCORE = data.response[0].MAX_SCORE;
 		});
 	GAME = 0;
     OOP.clearArr(podarki);
