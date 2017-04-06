@@ -367,6 +367,7 @@ game.newLoopFromConstructor('myGame', function () {
 			MAX_AVATAR = data.response;
 			console.log(data.response);
 		});
+	console.log('MAX_AVATAR: ' + MAX_AVATAR);
 	if(pjs.resources.isLoaded() == true)GAME = 0;
     OOP.clearArr(podarki);
     score = 0;
