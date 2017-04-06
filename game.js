@@ -29,7 +29,7 @@ game.newLoopFromConstructor('myGame', function () {
 		id : '',
 		name : 'none',
 		avatar : '',
-		loaded : true
+		loaded : false
 	};
 	
 	
@@ -162,10 +162,18 @@ game.newLoopFromConstructor('myGame', function () {
 	santa.draw(); // Отрисуем санту
 	
 	if(score > MAX_SCORE1){
+		MAX_SCORE2 = MAX_SCORE1;
+		MAX_NAME2 = MAX_NAME1;
+		MAX_AVATAR2 = MAX_AVATAR1;
+		
 		MAX_SCORE1 = score;
 		MAX_NAME1 = user.name;
 		MAX_AVATAR1 = user.avatar;
 	}else if(score > MAX_SCORE2){
+		MAX_SCORE3 = MAX_SCORE2;
+		MAX_NAME3 = MAX_NAME2;
+		MAX_AVATAR3 = MAX_AVATAR2;
+		
 		MAX_SCORE2 = score;
 		MAX_NAME2 = user.name;
 		MAX_AVATAR2 = user.avatar;
