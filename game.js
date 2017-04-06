@@ -122,9 +122,6 @@ game.newLoopFromConstructor('myGame', function () {
 
     });
 	
-	
-    // Заставим двигатьcz санту
-    // Учтем ограничения движения
 
     if (key.isDown('LEFT')) {
       // Двигаем влево
@@ -225,7 +222,7 @@ game.newLoopFromConstructor('myGame', function () {
   };
 
   this.entry = function () { // [optional]
-	VK.api("users.get", {}, function(data) {
+	VK.api("users.get", {'fields':'photo_50'}, function(data) {
 			user.name = '' + data.response[0].first_name;
 			user.id = '' + data.response[0].id;
 			user.avatar = '' + data.response[0].photo_50;
@@ -248,7 +245,9 @@ game.newLoopFromConstructor('myGame', function () {
     OOP.clearArr(podarki);
     score = 0;
   };
-
+	this.exit = function () {
+		save();
+	}
 });
 
 game.startLoop('myGame');
