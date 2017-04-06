@@ -45,7 +45,10 @@ game.newLoopFromConstructor('myGame', function () {
 		VK.api("storage.set", {global : 1, key : 'MAX_SCORE', value : MAX_SCORE}, function(data) {
 			console.log('РЕКОРД ОБНОВЛЕН');
 		});
-		VK.api("storage.set", {user_id: user.id, key : 'MAX_NAME', value : name}, function(data) {
+		VK.api("storage.set", {global: 1, key : 'MAX_NAME', value : name}, function(data) {
+			console.log('NAME РЕКОРД ОБНОВЛЕН');
+		});
+		VK.api("storage.set", {user_id: user.id, key : 'score', value : user.score}, function(data) {
 			console.log('NAME РЕКОРД ОБНОВЛЕН');
 		});
 	}
@@ -95,6 +98,9 @@ game.newLoopFromConstructor('myGame', function () {
 	
 	if(score > MAX_SCORE){
 		MAX_SCORE = score;
+	}
+	if(score > user.score){
+		user.score = score;
 	}
 	
     
@@ -177,7 +183,7 @@ game.newLoopFromConstructor('myGame', function () {
 		});
 		brush.drawText({
 		  x : 830, y : 30,
-		  text : '' + MAX_SCORE,
+		  text : '' + user.score,
 		  size : 50,
 		  color : '#FFFFFF',
 		  strokeColor : 'black',
@@ -187,7 +193,7 @@ game.newLoopFromConstructor('myGame', function () {
 		});
 		brush.drawText({
 		  x : 150, y : 500,
-		  text : '' + MAX_NAME,
+		  text : 'ТОП 1 по счету: ' + MAX_NAME + '(' + MAX_SCORE + ')',
 		  size : 50,
 		  color : '#FFFFFF',
 		  strokeColor : 'black',
@@ -224,9 +230,14 @@ game.newLoopFromConstructor('myGame', function () {
 			user.avatar = '' + data.response[0].photo_50;
 			user.loaded = true;
 		});
-	VK.api("storage.get", {global: 1, keys : 'MAX_NAME, MAX_SCORE'}, function(data) {
-			MAX_NAME = data.response[0].MAX_NAME;
-			MAX_SCORE = data.response[0].MAX_SCORE;
+	VK.api("storage.get", {global: 1, keys : 'MAX_NAME'}, function(data) {
+			MAX_NAME = data.response;
+		});
+	VK.api("storage.get", {global: 1, keys : 'MAX_SCORE'}, function(data) {
+			MAX_SCORE = data.response;
+		});
+	VK.api("storage.get", {user_id: user.id, keys : 'score'}, function(data) {
+			user.score = data.response;
 		});
 	GAME = 0;
     OOP.clearArr(podarki);
