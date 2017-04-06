@@ -33,8 +33,8 @@ game.newLoopFromConstructor('myGame', function () {
 	};
 
 	var GAME = 0;
-	var MAX_SCORE;
-	var MAX_NAME = '';
+	var MAX_SCORE = 0;
+	var MAX_NAME = 'Админ';
 
 	var speed = 2;
 	var direction = 1;
