@@ -29,7 +29,7 @@ game.newLoopFromConstructor('myGame', function () {
 		id : '',
 		name : 'none',
 		avatar : '',
-		loaded : false
+		loaded : true
 	};
 	
 	
@@ -366,8 +366,8 @@ game.newLoopFromConstructor('myGame', function () {
 	VK.api("storage.get", {global: 1, key : 'MAX_AVATAR'}, function(data) {
 			MAX_AVATAR = data.response;
 			console.log(data.response);
+			console.log('MAX_AVATAR: ' + MAX_AVATAR);
 		});
-	console.log('MAX_AVATAR: ' + MAX_AVATAR);
     OOP.clearArr(podarki);
     score = 0;
 	if(pjs.resources.isLoaded() == true)GAME = 0;
