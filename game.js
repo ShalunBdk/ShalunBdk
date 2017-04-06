@@ -29,7 +29,7 @@ game.newLoopFromConstructor('myGame', function () {
 		id : '',
 		name : 'none',
 		avatar : '',
-		loaded : false
+		loaded : true
 	};
 
 	var GAME = 0;
@@ -42,13 +42,13 @@ game.newLoopFromConstructor('myGame', function () {
 	var score = 0;
 	
 	var save = function(){
-		VK.api("storage.set", {global : 1, key : 'MAX_SCORE', value : MAX_SCORE}, function(data) {
+		VK.api("storage.set", {global : 1, key : 'MAX_SCOR', value : MAX_SCORE}, function(data) {
 			console.log('РЕКОРД ОБНОВЛЕН');
 		});
 		VK.api("storage.set", {global: 1, key : 'MAX_NAME', value : user.name}, function(data) {
 			console.log('NAME РЕКОРД ОБНОВЛЕН');
 		});
-		VK.api("storage.set", {user_id: user.id, key : 'score', value : user.score}, function(data) {
+		VK.api("storage.set", {user_id: user.id, key : 'scor', value : user.score}, function(data) {
 			console.log('NAME РЕКОРД ОБНОВЛЕН');
 		});
 	}
@@ -192,7 +192,7 @@ game.newLoopFromConstructor('myGame', function () {
 		  font : 'Arial'
 		});
 		brush.drawText({
-		  x : 50, y : 500,
+		  x : 20, y : 550,
 		  text : 'ТОП 1 по счету: ' + MAX_NAME + '(' + MAX_SCORE + ')',
 		  size : 30,
 		  color : '#FFFFFF',
@@ -228,17 +228,18 @@ game.newLoopFromConstructor('myGame', function () {
 			user.name = '' + data.response[0].first_name;
 			user.id = '' + data.response[0].id;
 			user.avatar = '' + data.response[0].photo_50;
+			console.log(user);
 			user.loaded = true;
 		});
-	VK.api("storage.get", {global: 1, keys : 'MAX_NAME'}, function(data) {
-			MAX_NAME = data.response;
+	VK.api("storage.get", {global: 1, key : 'MAX_NAME'}, function(data) {
+			MAX_NAME = '' + data.response;
 			console.log(data.response);
 		});
-	VK.api("storage.get", {global: 1, keys : 'MAX_SCORE'}, function(data) {
+	VK.api("storage.get", {global: 1, key : 'MAX_SCOR'}, function(data) {
 			MAX_SCORE = data.response;
 			console.log(data.response);
 		});
-	VK.api("storage.get", {user_id: user.id, keys : 'score'}, function(data) {
+	VK.api("storage.get", {user_id: user.id, key : 'scor'}, function(data) {
 			user.score = data.response;
 			console.log(data.response);
 		});
