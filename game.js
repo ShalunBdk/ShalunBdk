@@ -232,12 +232,15 @@ game.newLoopFromConstructor('myGame', function () {
 		});
 	VK.api("storage.get", {global: 1, keys : 'MAX_NAME'}, function(data) {
 			MAX_NAME = data.response[0];
+			console.log(MAX_NAME);
 		});
 	VK.api("storage.get", {global: 1, keys : 'MAX_SCORE'}, function(data) {
 			MAX_SCORE = data.response[0];
+			console.log(MAX_SCORE);
 		});
 	VK.api("storage.get", {user_id: user.id, keys : 'score'}, function(data) {
 			user.score = data.response[0];
+			console.log(user.score);
 		});
 	GAME = 0;
     OOP.clearArr(podarki);
