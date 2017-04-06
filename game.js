@@ -68,6 +68,12 @@ game.newLoopFromConstructor('myGame', function () {
     }
   });
 
+  var photo = game.newImageObject({
+    file : user.avatar,
+	x : 800,
+	y : 500
+  });
+  
   // Объявим массив с подарками
   var podarki = [];
 
@@ -248,6 +254,7 @@ game.newLoopFromConstructor('myGame', function () {
 			  style : 'bold',
 			  font : 'Arial'
 			});
+			photo.draw();
 		}
 		if (mouse.isPeekObject('LEFT', game_buttom)) {
 			GAME = 1;
