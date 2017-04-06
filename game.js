@@ -29,7 +29,7 @@ game.newLoopFromConstructor('myGame', function () {
 		id : '',
 		name : 'none',
 		avatar : '',
-		loaded : true
+		loaded : false
 	};
 	
 	
@@ -121,7 +121,7 @@ game.newLoopFromConstructor('myGame', function () {
 	if(direction == 1) santa.setFlip(false, false);
 	santa.draw(); // Отрисуем санту
 	
-	if(score > MAX_SCORE1){		
+	if(score > MAX_SCORE){		
 		MAX_SCORE = score;
 		MAX_NAME = user.name;
 		MAX_AVATAR = user.avatar;
