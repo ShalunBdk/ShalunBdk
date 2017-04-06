@@ -29,23 +29,15 @@ game.newLoopFromConstructor('myGame', function () {
 		id : '',
 		name : 'none',
 		avatar : '',
-		loaded : false
+		loaded : true
 	};
 	
 	
 	
 	var GAME = 0;
-	var MAX_SCORE1 = 0;
-	var MAX_NAME1 = 'Админ';
-	var MAX_AVATAR1 = 'https://pp.userapi.com/c637731/v637731138/3e192/ddFtzrhEJpw.jpg';
-
-	var MAX_SCORE2 = 0;
-	var MAX_NAME2 = 'Админ';
-	var MAX_AVATAR2 = 'https://pp.userapi.com/c637731/v637731138/3e192/ddFtzrhEJpw.jpg';
-
-	var MAX_SCORE3 = 0;
-	var MAX_NAME3 = 'Админ';
-	var MAX_AVATAR3 = 'https://pp.userapi.com/c637731/v637731138/3e192/ddFtzrhEJpw.jpg'; 
+	var MAX_SCORE = 0;
+	var MAX_NAME = 'Админ';
+	var MAX_AVATAR = '';
 	
 	var speed = 3;
 	var speedG = 2;
@@ -58,36 +50,16 @@ game.newLoopFromConstructor('myGame', function () {
 	var health = 3;
 	
 	var save = function(){
-		VK.api("storage.set", {global : 1, key : 'MAX_SCOR1', value : MAX_SCORE1}, function(data) {
+		VK.api("storage.set", {global : 1, key : 'MAX_SCOR', value : MAX_SCORE}, function(data) {
 			console.log('РЕКОРД ОБНОВЛЕН');
 		});
-		VK.api("storage.set", {global: 1, key : 'MAX_NAME1', value : MAX_NAME1}, function(data) {
+		VK.api("storage.set", {global: 1, key : 'MAX_NAME', value : MAX_NAME}, function(data) {
 			console.log('NAME РЕКОРД ОБНОВЛЕН');
 		});
 		VK.api("storage.set", {user_id: user.id, key : 'scor', value : user.score}, function(data) {
 			console.log('NAME РЕКОРД ОБНОВЛЕН');
 		});
-		VK.api("storage.set", {global : 1, key : 'MAX_AVATAR1', value : MAX_AVATAR1}, function(data) {
-			console.log('AVATAR РЕКОРД ОБНОВЛЕН');
-		});
-		
-		VK.api("storage.set", {global : 1, key : 'MAX_SCOR2', value : MAX_SCORE2}, function(data) {
-			console.log('РЕКОРД ОБНОВЛЕН');
-		});
-		VK.api("storage.set", {global: 1, key : 'MAX_NAME2', value : MAX_NAME2}, function(data) {
-			console.log('NAME РЕКОРД ОБНОВЛЕН');
-		});
-		VK.api("storage.set", {global : 1, key : 'MAX_AVATAR2', value : MAX_AVATAR2}, function(data) {
-			console.log('AVATAR РЕКОРД ОБНОВЛЕН');
-		});
-		
-		VK.api("storage.set", {global : 1, key : 'MAX_SCOR3', value : MAX_SCORE3}, function(data) {
-			console.log('РЕКОРД ОБНОВЛЕН');
-		});
-		VK.api("storage.set", {global: 1, key : 'MAX_NAME3', value : MAX_NAME3}, function(data) {
-			console.log('NAME РЕКОРД ОБНОВЛЕН');
-		});
-		VK.api("storage.set", {global : 1, key : 'MAX_AVATAR3', value : MAX_AVATAR3}, function(data) {
+		VK.api("storage.set", {global : 1, key : 'MAX_AVATAR', value : MAX_AVATAR}, function(data) {
 			console.log('AVATAR РЕКОРД ОБНОВЛЕН');
 		});
 	}
@@ -103,21 +75,9 @@ game.newLoopFromConstructor('myGame', function () {
   });
 
   var photo1 = game.newImageObject({
-    file : MAX_AVATAR1,
+    file : MAX_AVATAR,
 	x : 50,
 	y : 200
-  });
-  
-  var photo2 = game.newImageObject({
-    file : MAX_AVATAR2,
-	x : 50,
-	y : 350
-  });
-  
-  var photo3 = game.newImageObject({
-    file : MAX_AVATAR3,
-	x : 50,
-	y : 500
   });
   
   var heal = game.newImageObject({
@@ -161,26 +121,11 @@ game.newLoopFromConstructor('myGame', function () {
 	if(direction == 1) santa.setFlip(false, false);
 	santa.draw(); // Отрисуем санту
 	
-	if(score > MAX_SCORE1){
-		MAX_SCORE2 = MAX_SCORE1;
-		MAX_NAME2 = MAX_NAME1;
-		MAX_AVATAR2 = MAX_AVATAR1;
+	if(score > MAX_SCORE1){		
+		MAX_SCORE = score;
+		MAX_NAME = user.name;
+		MAX_AVATAR = user.avatar;
 		
-		MAX_SCORE1 = score;
-		MAX_NAME1 = user.name;
-		MAX_AVATAR1 = user.avatar;
-	}else if(score > MAX_SCORE2){
-		MAX_SCORE3 = MAX_SCORE2;
-		MAX_NAME3 = MAX_NAME2;
-		MAX_AVATAR3 = MAX_AVATAR2;
-		
-		MAX_SCORE2 = score;
-		MAX_NAME2 = user.name;
-		MAX_AVATAR2 = user.avatar;
-	}else if(score > MAX_SCORE3){
-		MAX_SCORE3 = score;
-		MAX_NAME3 = user.name;
-		MAX_AVATAR3 = user.avatar;
 	}
 	
 	if(score > user.score){
@@ -342,49 +287,7 @@ game.newLoopFromConstructor('myGame', function () {
 		});
 		brush.drawText({
 		  x : 20, y : 255,
-		  text : MAX_NAME1 + '(' + MAX_SCORE1 + ')',
-		  size : 25,
-		  color : '#FFFFFF',
-		  strokeColor : 'black',
-		  strokeWidth : 2,
-		  style : 'bold',
-		  font : 'Arial'
-		});
-		
-		brush.drawText({
-		  x : 10, y : 300,
-		  text : 'ТОП 2 по счету: ',
-		  size : 30,
-		  color : '#FFFFFF',
-		  strokeColor : 'black',
-		  strokeWidth : 2,
-		  style : 'bold',
-		  font : 'Arial'
-		});
-		brush.drawText({
-		  x : 20, y : 405,
-		  text : MAX_NAME2 + '(' + MAX_SCORE2 + ')',
-		  size : 25,
-		  color : '#FFFFFF',
-		  strokeColor : 'black',
-		  strokeWidth : 2,
-		  style : 'bold',
-		  font : 'Arial'
-		});
-		
-		brush.drawText({
-		  x : 10, y : 450,
-		  text : 'ТОП 3 по счету: ',
-		  size : 30,
-		  color : '#FFFFFF',
-		  strokeColor : 'black',
-		  strokeWidth : 2,
-		  style : 'bold',
-		  font : 'Arial'
-		});
-		brush.drawText({
-		  x : 20, y : 555,
-		  text : MAX_NAME2 + '(' + MAX_SCORE2 + ')',
+		  text : MAX_NAME + '(' + MAX_SCORE + ')',
 		  size : 25,
 		  color : '#FFFFFF',
 		  strokeColor : 'black',
@@ -394,8 +297,6 @@ game.newLoopFromConstructor('myGame', function () {
 		});
 		
 		photo1.draw();
-		photo2.draw();
-		photo3.draw();
 		if(dev == true){
 			brush.drawText({
 			  x : 750, y : 130,
@@ -455,50 +356,22 @@ game.newLoopFromConstructor('myGame', function () {
 			console.log(user);
 			user.loaded = true;
 		});
-	VK.api("storage.get", {global: 1, key : 'MAX_NAME1'}, function(data) {
-			MAX_NAME1 = '' + data.response;
+	VK.api("storage.get", {global: 1, key : 'MAX_NAME'}, function(data) {
+			MAX_NAME = '' + data.response;
 			console.log(data.response);
 		});
-	VK.api("storage.get", {global: 1, key : 'MAX_SCOR1'}, function(data) {
-			MAX_SCORE1 = data.response;
+	VK.api("storage.get", {global: 1, key : 'MAX_SCOR'}, function(data) {
+			MAX_SCORE = data.response;
 			console.log(data.response);
 		});
 	VK.api("storage.get", {user_id: user.id, key : 'scor'}, function(data) {
 			user.score = data.response;
 			console.log(data.response);
 		});
-	VK.api("storage.get", {global: 1, key : 'MAX_AVATAR1'}, function(data) {
-			MAX_AVATAR1 = data.response;
+	VK.api("storage.get", {global: 1, key : 'MAX_AVATAR'}, function(data) {
+			MAX_AVATAR = data.response;
 			console.log(data.response);
-			photo1.setImage(MAX_AVATAR1);
-		});
-	
-	VK.api("storage.get", {global: 1, key : 'MAX_NAME2'}, function(data) {
-			MAX_NAME2 = '' + data.response;
-			console.log(data.response);
-		});
-	VK.api("storage.get", {global: 1, key : 'MAX_SCOR2'}, function(data) {
-			MAX_SCORE2 = data.response;
-			console.log(data.response);
-		});
-	VK.api("storage.get", {global: 1, key : 'MAX_AVATAR2'}, function(data) {
-			MAX_AVATAR2 = data.response;
-			console.log(data.response);
-			photo2.setImage(MAX_AVATAR2);
-		});
-		
-	VK.api("storage.get", {global: 1, key : 'MAX_NAME3'}, function(data) {
-			MAX_NAME3 = '' + data.response;
-			console.log(data.response);
-		});
-	VK.api("storage.get", {global: 1, key : 'MAX_SCOR3'}, function(data) {
-			MAX_SCORE3 = data.response;
-			console.log(data.response);
-		});
-	VK.api("storage.get", {global: 1, key : 'MAX_AVATAR3'}, function(data) {
-			MAX_AVATAR3 = data.response;
-			console.log(data.response);
-			photo3.setImage(MAX_AVATAR3);
+			photo1.setImage(MAX_AVATAR);
 		});
 	
     OOP.clearArr(podarki);
