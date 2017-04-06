@@ -364,7 +364,7 @@ game.newLoopFromConstructor('myGame', function () {
 			console.log(data.response);
 		});
 	VK.api("storage.get", {global: 1, key : 'MAX_AVATAR'}, function(data) {
-			MAX_AVATAR = '' + data.response;
+			MAX_AVATAR = data.response;
 			console.log(data.response);
 		});
 	if(pjs.resources.isLoaded() == true)GAME = 0;
