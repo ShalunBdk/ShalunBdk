@@ -1,5 +1,5 @@
 var pjs = new PointJS('2D', 900, 600, { // 16:9
-  backgroundColor : '#53769A' // if need
+  backgroundColor : '#FFFFFF' // if need
 });
 
 var log    = pjs.system.log;     // log = console.log;
@@ -23,6 +23,14 @@ var lm = pjs.memory.local;
 pjs.system.setTitle('Happy New Year Game'); // Set Title for Tab or Window
 
 game.newLoopFromConstructor('myGame', function () {
+	
+	var user = {
+		score: 0,
+		id : '',
+		name : 'none',
+		avatar : '',
+		loaded : false
+	};
 
 	var GAME = 0;
 	var MAX_SCORE;
@@ -62,7 +70,6 @@ game.newLoopFromConstructor('myGame', function () {
 	VK.api("users.get", {'fields': 'first_name, last_name'}, function(data) {
 			NAME = '' + data.response[0].first_name + ' ' + data.response[0].last_name;
 		});
-		
   this.update = function () {
 
     // Задействуем фактор дельта-тайм
@@ -142,7 +149,7 @@ game.newLoopFromConstructor('myGame', function () {
       font : 'Arial'
     });
 	
-	} else if(GAME == 0){
+	} else if(GAME == 0 && user.loaded){
 		back = game.newImageObject({
 		file : 'pic/menu_game.png',
 		h : 600,
@@ -193,12 +200,29 @@ game.newLoopFromConstructor('myGame', function () {
 		if (key.isDown('ENTER')) {
 			GAME = 1;
 		}
+	}else if(GAME == 0 && user.loaded == false){
+		
+		brush.drawText({
+		  x : 150, y : 30,
+		  text : 'Загрузка...',
+		  size : 50,
+		  color : '#FFFFFF',
+		  strokeColor : 'black',
+		  strokeWidth : 2,
+		  style : 'bold',
+		  font : 'Arial'
+		});
 	}
 
   };
 
   this.entry = function () { // [optional]
-    // При входе в игру будем очищать подарки и удалять счет
+	VK.api("users.get", {}, function(data) {
+			user.name = '' + data.response[0].first_name;
+			user.id = '' + data.response[0].id;
+			user.avatar = '' + data.response[0].photo_50;
+			user.loaded = true;
+		});
 	GAME = 0;
     OOP.clearArr(podarki);
     score = 0;
