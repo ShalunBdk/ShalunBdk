@@ -29,7 +29,7 @@ game.newLoopFromConstructor('myGame', function () {
 		id : '',
 		name : 'none',
 		avatar : '',
-		loaded : true
+		loaded : false
 	};
 
 	var GAME = 0;
@@ -98,6 +98,7 @@ game.newLoopFromConstructor('myGame', function () {
 	
 	if(score > MAX_SCORE){
 		MAX_SCORE = score;
+		MAX_NAME = user.name;
 	}
 	if(score > user.score){
 		user.score = score;
