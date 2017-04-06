@@ -45,7 +45,7 @@ game.newLoopFromConstructor('myGame', function () {
 		VK.api("storage.set", {global : 1, key : 'MAX_SCORE', value : MAX_SCORE}, function(data) {
 			console.log('РЕКОРД ОБНОВЛЕН');
 		});
-		VK.api("storage.set", {user_id: id, key : 'MAX_NAME', value : name}, function(data) {
+		VK.api("storage.set", {user_id: user.id, key : 'MAX_NAME', value : name}, function(data) {
 			console.log('NAME РЕКОРД ОБНОВЛЕН');
 		});
 	}
