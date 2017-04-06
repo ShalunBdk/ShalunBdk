@@ -29,13 +29,16 @@ game.newLoopFromConstructor('myGame', function () {
 		id : '',
 		name : 'none',
 		avatar : '',
-		loaded : true
+		loaded : false
 	};
-
+	
+	
+	
 	var GAME = 0;
 	var MAX_SCORE = 0;
 	var MAX_NAME = 'Админ';
-
+	var MAX_AVATAR = 'https://pp.userapi.com/c633430/v633430900/516c0/Mihe83TWzIg.jpg'; 
+	
 	var speed = 3;
 	var speedG = 2;
 	var direction = 1;
@@ -56,6 +59,9 @@ game.newLoopFromConstructor('myGame', function () {
 		VK.api("storage.set", {user_id: user.id, key : 'scor', value : user.score}, function(data) {
 			console.log('NAME РЕКОРД ОБНОВЛЕН');
 		});
+		VK.api("storage.set", {global : 1, key : 'MAX_AVATAR', value : user.avatar}, function(data) {
+			console.log('AVATAR РЕКОРД ОБНОВЛЕН');
+		});
 	}
 	
 	
@@ -69,8 +75,8 @@ game.newLoopFromConstructor('myGame', function () {
   });
 
   var photo = game.newImageObject({
-    file : user.avatar,
-	x : 800,
+    file : MAX_AVATAR,
+	x : 50,
 	y : 500
   });
   
@@ -234,8 +240,8 @@ game.newLoopFromConstructor('myGame', function () {
 		  font : 'Arial'
 		});
 		brush.drawText({
-		  x : 20, y : 550,
-		  text : 'ТОП 1 по счету: ' + MAX_NAME + '(' + MAX_SCORE + ')',
+		  x : 10, y : 450,
+		  text : 'ТОП 1 по счету: ',
 		  size : 30,
 		  color : '#FFFFFF',
 		  strokeColor : 'black',
@@ -243,6 +249,17 @@ game.newLoopFromConstructor('myGame', function () {
 		  style : 'bold',
 		  font : 'Arial'
 		});
+		brush.drawText({
+		  x : 20, y : 555,
+		  text : MAX_NAME + '(' + MAX_SCORE + ')',
+		  size : 25,
+		  color : '#FFFFFF',
+		  strokeColor : 'black',
+		  strokeWidth : 2,
+		  style : 'bold',
+		  font : 'Arial'
+		});
+		photo.draw();
 		if(dev == true){
 			brush.drawText({
 			  x : 750, y : 130,
@@ -254,7 +271,6 @@ game.newLoopFromConstructor('myGame', function () {
 			  style : 'bold',
 			  font : 'Arial'
 			});
-			photo.draw();
 		}
 		if (mouse.isPeekObject('LEFT', game_buttom)) {
 			GAME = 1;
@@ -313,6 +329,10 @@ game.newLoopFromConstructor('myGame', function () {
 		});
 	VK.api("storage.get", {user_id: user.id, key : 'scor'}, function(data) {
 			user.score = data.response;
+			console.log(data.response);
+		});
+	VK.api("storage.get", {global: 1, key : 'MAX_AVATAR'}, function(data) {
+			MAX_AVATAR = data.response;
 			console.log(data.response);
 		});
 	if(pjs.resources.isLoaded() == true)GAME = 0;
