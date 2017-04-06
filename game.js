@@ -45,7 +45,7 @@ game.newLoopFromConstructor('myGame', function () {
 		VK.api("storage.set", {global : 1, key : 'MAX_SCORE', value : MAX_SCORE}, function(data) {
 			console.log('РЕКОРД ОБНОВЛЕН');
 		});
-		VK.api("storage.set", {global: 1, key : 'MAX_NAME', value : name}, function(data) {
+		VK.api("storage.set", {global: 1, key : 'MAX_NAME', value : user.name}, function(data) {
 			console.log('NAME РЕКОРД ОБНОВЛЕН');
 		});
 		VK.api("storage.set", {user_id: user.id, key : 'score', value : user.score}, function(data) {
@@ -231,16 +231,16 @@ game.newLoopFromConstructor('myGame', function () {
 			user.loaded = true;
 		});
 	VK.api("storage.get", {global: 1, keys : 'MAX_NAME'}, function(data) {
-			MAX_NAME = data.response[0];
-			console.log(MAX_NAME);
+			MAX_NAME = data.response;
+			console.log(data.response);
 		});
 	VK.api("storage.get", {global: 1, keys : 'MAX_SCORE'}, function(data) {
-			MAX_SCORE = data.response[0];
-			console.log(MAX_SCORE);
+			MAX_SCORE = data.response;
+			console.log(data.response);
 		});
 	VK.api("storage.get", {user_id: user.id, keys : 'score'}, function(data) {
-			user.score = data.response[0];
-			console.log(user.score);
+			user.score = data.response;
+			console.log(data.response);
 		});
 	GAME = 0;
     OOP.clearArr(podarki);
