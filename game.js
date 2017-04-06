@@ -29,7 +29,7 @@ game.newLoopFromConstructor('myGame', function () {
 		id : '',
 		name : 'none',
 		avatar : '',
-		loaded : true
+		loaded : false
 	};
 	
 	
@@ -59,7 +59,7 @@ game.newLoopFromConstructor('myGame', function () {
 		VK.api("storage.set", {user_id: user.id, key : 'scor', value : user.score}, function(data) {
 			console.log('NAME РЕКОРД ОБНОВЛЕН');
 		});
-		VK.api("storage.set", {global : 1, key : 'MAX_AVATAR', value : user.avatar}, function(data) {
+		VK.api("storage.set", {global : 1, key : 'MAX_AVATAR', value : MAX_AVATAR}, function(data) {
 			console.log('AVATAR РЕКОРД ОБНОВЛЕН');
 		});
 	}
@@ -116,6 +116,7 @@ game.newLoopFromConstructor('myGame', function () {
 	if(score > MAX_SCORE){
 		MAX_SCORE = score;
 		MAX_NAME = user.name;
+		MAX_AVATAR = user.avatar;
 	}
 	if(score > user.score){
 		user.score = score;
