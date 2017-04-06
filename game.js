@@ -192,9 +192,9 @@ game.newLoopFromConstructor('myGame', function () {
 		  font : 'Arial'
 		});
 		brush.drawText({
-		  x : 150, y : 500,
+		  x : 50, y : 500,
 		  text : 'ТОП 1 по счету: ' + MAX_NAME + '(' + MAX_SCORE + ')',
-		  size : 50,
+		  size : 30,
 		  color : '#FFFFFF',
 		  strokeColor : 'black',
 		  strokeWidth : 2,
