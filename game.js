@@ -50,7 +50,7 @@ game.newLoopFromConstructor('myGame', function () {
 	var health = 3;
 	
 	var save = function(){
-		VK.api("storage.set", {global : 1, key : 'MAX_SCOR', value : 0}, function(data) {
+		VK.api("storage.set", {global : 1, key : 'MAX_SCOR', value : MAX_SCORE}, function(data) {
 			console.log('РЕКОРД ОБНОВЛЕН');
 		});
 		VK.api("storage.set", {global: 1, key : 'MAX_NAME', value : user.name}, function(data) {
