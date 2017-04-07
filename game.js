@@ -236,6 +236,10 @@ game.newLoopFromConstructor('myGame', function () {
 			  style : 'bold',
 			  font : 'Arial'
 			});
+			santa.drawDynamicBox();
+			OOP.forArr(podarki, function (el, i) {
+				el.drawDynamicBox();
+			});
 		}
 	
 	} else if(GAME == 0 && user.loaded){
