@@ -178,7 +178,6 @@ game.newLoopFromConstructor('myGame', function () {
       if (el.isIntersect(santa)) {
         podarki.splice(i, 1); // i - идентификатор, 1 - количество
         score++; // Увеличиваем счет
-        speed+= 0.01; // увеличиваем скорость
       }
 
     });
