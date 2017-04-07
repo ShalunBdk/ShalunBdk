@@ -29,7 +29,7 @@ game.newLoopFromConstructor('myGame', function () {
 		id : '',
 		name : 'none',
 		avatar : '',
-		loaded : false
+		loaded : true
 	};
 	
 	
@@ -65,7 +65,7 @@ game.newLoopFromConstructor('myGame', function () {
 	}
 	
 	
-  var santa = game.newImageObject({
+  var pl = game.newImageObject({
     file : 'pic/krest_right_down.png',
     h : 150, // Оптимальный размер санты
     onload : function () {
@@ -73,6 +73,13 @@ game.newLoopFromConstructor('myGame', function () {
       this.y = -this.h + height; // Отлично
     }
   });
+  var santa = game.newAnimationObject({
+	  animation : pjs.tiles.newAnimation('pic/krest_anim.png', 225, 439, 2),
+	  h: 150,
+	  w : 100,
+	  delay : 10,
+	  y : -150 + height
+	});
 
   var photo1 = game.newImageObject({
     file : MAX_AVATAR,
@@ -119,7 +126,7 @@ game.newLoopFromConstructor('myGame', function () {
     back.draw(); // Отрисуем фон
 	if(direction == 0) santa.setFlip(true, false);
 	if(direction == 1) santa.setFlip(false, false);
-	santa.draw(); // Отрисуем санту
+	//santa.draw(); // Отрисуем санту
 	
 	if(score > MAX_SCORE){		
 		MAX_SCORE = score;
@@ -187,20 +194,20 @@ game.newLoopFromConstructor('myGame', function () {
       // Двигаем влево
       if (santa.x >= 0)
         santa.x -= speed * dt;
+		santa.draw();
 		direction = 0;
-    }
-
-    if (key.isDown('RIGHT')) {
+    }else if (key.isDown('RIGHT')) {
       // Двигаем влево
       if (santa.x+santa.w < width)
         santa.x += speed * dt;
+		santa.draw();
 		direction = 1;
-    }
-	
-	if (key.isDown('ESC')) {
+    }else if (key.isDown('ESC')) {
 		save();
 		GAME = 0;
-    }
+    }else {
+		santa.drawFrame(santa.frame);
+	}
 
     // Отрисуем счет
     brush.drawText({
