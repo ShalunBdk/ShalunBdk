@@ -268,7 +268,7 @@ game.newLoopFromConstructor('myGame', function () {
 		  font : 'Arial'
 		});
 		brush.drawText({
-		  x : 830, y : 30,
+		  x : 810, y : 30,
 		  text : '' + user.score,
 		  size : 50,
 		  color : '#FFFFFF',
